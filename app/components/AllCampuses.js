@@ -1,12 +1,12 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
-import {getCampusesThunk, addACampusThunk, deleteACampusThunk} from '../reducers/index'
+import {addACampusThunk, deleteACampusThunk} from '../reducers/index'
 import { Link } from 'react-router-dom';
 
 function AllCampuses (props){
   return (
     <div>
-      <h4>Campuses</h4>
+      <h4>All Campuses</h4>
       <ul>
           {
           props.campuses && props.campuses.map(campus=>{
@@ -56,7 +56,6 @@ const mapDispatchToProps = (dispatch, ownProps)=>{
       dispatch(addACampusThunk(newCampus, ownProps.history))
     },
     deleteCampus: (id)=>{
-      console.log(id)
       dispatch(deleteACampusThunk(id))
     }
   }

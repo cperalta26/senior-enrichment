@@ -15,13 +15,14 @@ class SingleCampus extends Component {
         <h4>{this.props.campus.name}</h4>
         <h5>{this.props.campus.phone}</h5>
         <h6>{this.props.campus.address}</h6>
+        <hr/>
+        <h5>Students enrolled</h5>
         <ul>
         {
           this.props.campus.students && this.props.campus.students.map(student=>{
             return (
               <li key={student.id}>
                 <Link to={`/students/${student.id}`}> {student.name}</Link>
-                <button>X</button>
               </li>
             )
           })

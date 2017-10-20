@@ -113,14 +113,22 @@ export const addACampusThunk = (newCampus, history) => (dispatch) => {
     })
     .catch(console.error.bind(console))
 }
-
+export const updateACampusThunk = (campusId, body, history) => (dispatch) => {
+  axios.put(`/api/campuses/${campusId}`, body)
+    .then(res=>res.data)
+    .then(updatedCampus=>{
+      dispatch(updateACampus(updatedCampus))
+      history.push(`/students/${updatedCampus.id}`)
+    })
+    .catch(console.error.bind(console))
+}
 export const deleteACampusThunk = (id)=>(dispatch) => {
    dispatch(deleteACampus(id))
   axios.delete(`/api/campuses/${id}`)
     .catch(console.error.bind(console))
 }
 
-const rootReducer = /* eventually (if we modularize) equal to the return value of combineReducers*/function(state = initialState, action) {
+const rootReducer = function(state = initialState, action) {
   switch(action.type) {
     case GET_ALLSTUDENTS:
       return Object.assign({}, state, {students: action.students})
@@ -139,6 +147,11 @@ const rootReducer = /* eventually (if we modularize) equal to the return value o
 
     case ADD_A_CAMPUS:
       return Object.assign({}, state, {campuses: [...state.campuses, action.campus]})
+
+    case UPDATE_A_CAMPUS:
+      return Object.assign({}, state, {campuses: state.campuses.map(
+        campus=>{campus.id===action.campus.id ? action.campus : campus}
+      )})
 
     case DELETE_A_CAMPUS:
       return Object.assign({}, state, {campuses: state.campuses.filter(campus=>campus.id !== action.campusId)})

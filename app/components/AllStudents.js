@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
-import {getStudentsThunk, addAStudentThunk, deleteAStudentThunk} from '../reducers/index'
+import {addAStudentThunk, deleteAStudentThunk} from '../reducers/index'
 import { Link } from 'react-router-dom';
 
 function AllStudents (props){
