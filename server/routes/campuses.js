@@ -4,7 +4,7 @@ const Students = require('../../db/models/Students');
 
 module.exports = campusRouter;
 
-//"/api/campus"
+//"/api/campuses"
 
 
 campusRouter.get('/', (req, res, next)=>{
@@ -55,8 +55,8 @@ campusRouter.put('/:campusId', function (req, res, next) {
 
 });
 
-campusRouter.delete('/', function (req, res, next) {
-    Campus.findById(req.body.id)
+campusRouter.delete('/:campusId', function (req, res, next) {
+    Campus.findById(req.params.campusId)
       .then(campusToDelete=>campusToDelete.destroy())
       .then(res.status(204).send('Campus deleted'))
       .catch(next);

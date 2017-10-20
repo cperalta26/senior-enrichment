@@ -3,13 +3,17 @@ import {Route, Switch, withRouter} from 'react-router-dom'
 import Navbar from './Navbar'
 import AllCampuses from './AllCampuses'
 import SingleCampus from './SingleCampus'
+import EditCampus from './EditCampus'
+import AllStudents from './AllStudents'
+import SingleStudent from './SingleStudent'
 import store from '../store'
-import {getCampusesThunk} from '../reducers/index'
+import {getCampusesThunk, getStudentsThunk} from '../reducers/index'
 import {connect} from 'react-redux'
 
 class Main extends Component {
   componentDidMount () {
     this.props.goFetchCampuses();
+    this.props.goFetchStudents();
   }
   render() {
     return(
@@ -18,6 +22,9 @@ class Main extends Component {
         <Switch>
           <Route exact path='/campuses' component={AllCampuses} />
           <Route path='/campuses/:campusId' component={SingleCampus} />
+          <Route path='/edit_campus/:campusId' component={EditCampus} />
+          <Route exact path='/students' component={AllStudents} />
+          <Route path='/students/:studentId' component={SingleStudent} />
         </Switch>
       </div>
     )
@@ -27,7 +34,8 @@ class Main extends Component {
 
 const mapDispatchToProps = (dispatch, ownProps)=>{
   return {
-    goFetchCampuses:  () => dispatch(getCampusesThunk())
+    goFetchCampuses:  () => dispatch(getCampusesThunk()),
+    goFetchStudents: () => dispatch(getStudentsThunk())
   }
 }
 const campus = withRouter(connect(null, mapDispatchToProps)(Main))

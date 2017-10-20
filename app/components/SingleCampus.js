@@ -21,11 +21,13 @@ class SingleCampus extends Component {
             return (
               <li key={student.id}>
                 <Link to={`/students/${student.id}`}> {student.name}</Link>
+                <button>X</button>
               </li>
             )
           })
         }
         </ul>
+        <Link to={`/edit_campus/${this.props.match.params.campusId}`}><button>Edit Campus</button></Link>
       </div>
     )
   }

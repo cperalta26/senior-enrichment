@@ -7,7 +7,9 @@ export default function Navbar() {
       <h3>
         <Link to="/campuses">Campuses</Link>
       </h3>
-      <h3>Students</h3>
+      <h3>
+      <Link to="/students">Students</Link>
+      </h3>
     </nav>
   )
 }

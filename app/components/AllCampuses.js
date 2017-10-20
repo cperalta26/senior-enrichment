@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getCampusesThunk} from '../reducers/index'
+import {getCampusesThunk, addACampusThunk, deleteACampusThunk} from '../reducers/index'
 import { Link } from 'react-router-dom';
 
 function AllCampuses (props){
@@ -13,12 +13,13 @@ function AllCampuses (props){
             return (
               <li key={campus.id}>
                 <Link to={`/campuses/${campus.id}`} >{campus.name}</Link>
+                <button onClick={(event)=>{props.deleteCampus(campus.id)}}>X</button>
               </li>
             )
           })
         }
       </ul>
-      <form onSubmit={props.handleSubmit}>
+      <form onSubmit={props.handleSubmit} >
         <div>
           <label>Name: </label>
           <input type="text" name="name" />
@@ -37,18 +38,6 @@ function AllCampuses (props){
   )
 }
 
-// <form className="form-inline">
-// <label htmlFor="name">Your name:</label>
-// <input
-//   type="text"
-//   name="name"
-//   placeholder="Enter your name"
-//   className="form-control"
-//   onChange={handleChange}
-//   value={name}
-// />
-// </form>
-
 const mapStateToProps = (state)=>{
   return {
     campuses: state.campuses
@@ -57,15 +46,18 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch, ownProps)=>{
   return {
-    handleSubmit:(event, newCampus)=>{
+    handleSubmit:(event)=>{
       event.preventDefault();
       const newCampus = {
-        name: event.target.name.value
+        name: event.target.name.value,
+        phone: event.target.phone.value,
+        address: event.target.address.value
       }
-      console.log(newCampus)
-      // console.log(event.target.name.value)
-      // console.log(event.target.phone.value)
-      // console.log(event.target.address.value)
+      dispatch(addACampusThunk(newCampus, ownProps.history))
+    },
+    deleteCampus: (id)=>{
+      console.log(id)
+      dispatch(deleteACampusThunk(id))
     }
   }
 }
@@ -74,15 +66,3 @@ const campuses = connect(mapStateToProps, mapDispatchToProps)(AllCampuses)
 
 export default campuses
 
-
-
-// const mapDispatchToProps = function (dispatch, ownProps) {
-//   return {
-//     handleChange: function (event) {
-//       dispatch(writeChannelName(event.target.value))
-//     },
-//     handleSubmit: function (event) {
-//       dispatch(postChannel(event))
-//     }
-//   }
-// }
